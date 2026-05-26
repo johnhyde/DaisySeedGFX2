@@ -195,6 +195,7 @@ friend class cImageLayer;
     // Initialize the display manager
     // Configures layers, screen size, dirty blocks, and initializes hardware
     void init(sFIFO_Data *pFIFO_Data, sColor* pDitryBlocFrame);
+    void init(sFIFO_Data *pFIFO_Data, sColor* pDitryBlocFrame, const TFTSPIConfig &spiConfig);
 
     // --------------------------------------------------------------------------
     // Add a new layer to the display

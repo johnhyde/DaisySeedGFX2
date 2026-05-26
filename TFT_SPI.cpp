@@ -22,14 +22,19 @@ namespace DadGFX {
 // --------------------------------------------------------------------------
 // Initialize the SPI connection
 void TFT_SPI::Init_TFT_SPI() {
+    TFTSPIConfig config;
+    Init_TFT_SPI(config);
+}
+
+void TFT_SPI::Init_TFT_SPI(const TFTSPIConfig &config) {
     // SPI configuration
-    m_spi_config.periph     = _TFT_SPI_PORT;                                     // Set the SPI peripheral
-    m_spi_config.mode       = SpiHandle::Config::Mode::MASTER;                   // Master mode
+    m_spi_config.periph     = config.spi_port;                                   // Set the SPI peripheral
+    m_spi_config.mode       = config.spi_mode;                                   // Master mode
     m_spi_config.direction  = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;   // TX-only mode
     m_spi_config.datasize   = 8;                                                 // 8-bit data size
     
     // Configure SPI mode based on the defined settings
-    switch(_TFT_SPI_MODE) {
+    switch(config.clock_mode) {
         case SPIMode::Mode3:
             m_spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::HIGH;
             m_spi_config.clock_phase    = SpiHandle::Config::ClockPhase::TWO_EDGE;
@@ -51,17 +56,17 @@ void TFT_SPI::Init_TFT_SPI() {
     
     // Other SPI settings
     m_spi_config.nss            = SpiHandle::Config::NSS::SOFT;                  // Software NSS
-    m_spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::TFT_SPI_BaudPrescaler;
+    m_spi_config.baud_prescaler = config.baud_prescaler;
 
     // Pin configuration for SPI
-    m_spi_config.pin_config.sclk = _TFT_SCLK;                                    // Clock pin
+    m_spi_config.pin_config.sclk = config.sclk_pin;                              // Clock pin
     m_spi_config.pin_config.miso = dsy_gpio_pin();                               // MISO pin (not used)
-    m_spi_config.pin_config.mosi = _TFT_MOSI;                                    // MOSI pin
+    m_spi_config.pin_config.mosi = config.mosi_pin;                              // MOSI pin
     m_spi_config.pin_config.nss  = dsy_gpio_pin();                               // NSS pin (not used)
         
     // TFT control pin configuration
-    m_dc.Init(_TFT_DC, GPIO::Mode::OUTPUT, GPIO::Pull::NOPULL, GPIO::Speed::VERY_HIGH);     // Data/Command pin
-    m_reset.Init(_TFT_RST, GPIO::Mode::OUTPUT, GPIO::Pull::NOPULL, GPIO::Speed::VERY_HIGH); // Reset pin
+    m_dc.Init(config.dc_pin, GPIO::Mode::OUTPUT, GPIO::Pull::NOPULL, GPIO::Speed::VERY_HIGH);     // Data/Command pin
+    m_reset.Init(config.reset_pin, GPIO::Mode::OUTPUT, GPIO::Pull::NOPULL, GPIO::Speed::VERY_HIGH); // Reset pin
     m_dc.Write(true);    // Set DC pin to high
     m_reset.Write(true); // Set Reset pin to high
 

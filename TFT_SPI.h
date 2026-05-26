@@ -62,6 +62,17 @@ enum class Rotation {
 
 namespace DadGFX {
 
+struct TFTSPIConfig {
+    SpiHandle::Config::Peripheral spi_port = _TFT_SPI_PORT;
+    SpiHandle::Config::Mode spi_mode = SpiHandle::Config::Mode::MASTER;
+    SPIMode clock_mode = _TFT_SPI_MODE;
+    SpiHandle::Config::BaudPrescaler baud_prescaler = SpiHandle::Config::BaudPrescaler::TFT_SPI_BaudPrescaler;
+    Pin mosi_pin = _TFT_MOSI;
+    Pin sclk_pin = _TFT_SCLK;
+    Pin dc_pin = _TFT_DC;
+    Pin reset_pin = _TFT_RST;
+};
+
 //***********************************************************************************
 // TFT_SPI
 //  SPI management for communication with the TFT screen
@@ -72,6 +83,7 @@ class TFT_SPI {
     // --------------------------------------------------------------------------
     // Initialize SPI communication
     void Init_TFT_SPI();
+    void Init_TFT_SPI(const TFTSPIConfig &config);
 
     // --------------------------------------------------------------------------
     // Initialize the TFT screen

@@ -322,6 +322,11 @@ cDisplay::~cDisplay() {
 // Initialize the display manager
 // Configures layers, screen size, dirty blocks, and initializes hardware
 void cDisplay::init(sFIFO_Data *pFIFO_Data, sColor* pDitryBlocFrame) {
+    TFTSPIConfig spiConfig;
+    init(pFIFO_Data, pDitryBlocFrame, spiConfig);
+}
+
+void cDisplay::init(sFIFO_Data *pFIFO_Data, sColor* pDitryBlocFrame, const TFTSPIConfig &spiConfig) {
     // Clear layers and reset layer change flag
     m_TabLayers.clear();
     m_LayersChange = 0;
@@ -346,7 +351,7 @@ void cDisplay::init(sFIFO_Data *pFIFO_Data, sColor* pDitryBlocFrame) {
     m_pDitryBlocFrame = pDitryBlocFrame;
     
     // Initialize SPI bus for the display
-    Init_TFT_SPI();
+    Init_TFT_SPI(spiConfig);
 }
 
 // --------------------------------------------------------------------------
