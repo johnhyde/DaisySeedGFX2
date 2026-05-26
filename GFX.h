@@ -192,6 +192,12 @@ public:
     }
 
     // --------------------------------------------------------------------------
+    // Draw a single pixel
+    inline DAD_GFX_ERROR drawPixel(uint16_t x, uint16_t y, const sColor& Color) {
+        return setPixel(x, y, Color);
+    }
+
+    // --------------------------------------------------------------------------
     // Draw a line using Bresenham's line algorithm
     void drawLine(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, const sColor& Color);
 
@@ -208,6 +214,14 @@ public:
     // --------------------------------------------------------------------------  
     // Draw an arc
     void drawArc(uint16_t centerX, uint16_t centerY, uint16_t radius, uint16_t AlphaIn, uint16_t AlphaOut, const sColor& Color);
+
+    // --------------------------------------------------------------------------
+    // Draw a 1-bit bitmap using foreground and background colors
+    inline DAD_GFX_ERROR drawBitmap(uint16_t x0, uint16_t y0, const uint8_t* pBitmap, uint16_t BitmapWidth,
+                                    uint16_t BitmapBmpHeight, const sColor& ForegroundColor,
+                                    const sColor& BackgroundColor) {
+        return fillRectWithBitmap(x0, y0, pBitmap, BitmapWidth, BitmapBmpHeight, ForegroundColor, BackgroundColor);
+    }
 
     // ==========================================================================
     // Draw text
@@ -276,7 +290,6 @@ public:
         return m_pFont->getHeight();
     }
 
-    protected:
     // ==========================================================================
     // Virtual methods implemented in cLayer
     // ==========================================================================
@@ -292,6 +305,7 @@ public:
                                             const uint8_t* pBitmap, uint16_t BitmapWidth, uint16_t BitmapBmpHeight,
                                             const sColor& ForegroundColor, const sColor& BackgroundColor) = 0;
 
+protected:
     // ==========================================================================
     // Member variables for text drawing
     // ==========================================================================

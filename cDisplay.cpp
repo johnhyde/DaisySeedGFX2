@@ -280,7 +280,7 @@ DAD_GFX_ERROR cLayer::eraseLayer(const sColor& Color){
 // Move the layer to a new position (x, y)
 DAD_GFX_ERROR cLayerBase::moveLayer(uint16_t x, uint16_t y){
     // Check if the new position is within screen boundaries
-    if(x >= m_pDisplay->getWith()) x = m_pDisplay->getWith()-1;
+    if(x >= m_pDisplay->getWidth()) x = m_pDisplay->getWidth()-1;
     if(y >= m_pDisplay->getHeight()) y = m_pDisplay->getHeight()-1;
 
     // Invalidate the current position to erase the layer
@@ -561,7 +561,7 @@ void cDisplay::flush() {
                     // Get the position and dimensions of the layer
                     uint16_t layerX = layer->getX();
                     uint16_t layerY = layer->getY();
-                    uint16_t layerWidth = layer->getWith();
+                    uint16_t layerWidth = layer->getWidth();
                     uint16_t layerHeight = layer->getHeight();
 
                     // Calculate the intersection between the block and the layer
@@ -579,7 +579,7 @@ void cDisplay::flush() {
                         uint16_t layerOffsetY = intersectY - layerY;
 
                         // Start the blending operation
-                        sColor* pSource = &(layer->getFrame()[(layerOffsetY * layer->getWith()) + layerOffsetX]);
+                        sColor* pSource = &(layer->getFrame()[(layerOffsetY * layer->getWidth()) + layerOffsetX]);
                         sColor* pDest = &m_pDitryBlocFrame[(offsetY * m_DitryBlocWidth) + offsetX];
                         Blend2Bloc(
                             m_DitryBlocWidth - intersectWidth,

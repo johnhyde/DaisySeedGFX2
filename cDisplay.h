@@ -225,8 +225,12 @@ friend class cImageLayer;
 
     // --------------------------------------------------------------------------
     // Get the width of the Display
-    inline uint16_t getWith(){
+    inline uint16_t getWidth(){
         return m_Width;
+    }
+
+    inline uint16_t getWith(){
+        return getWidth();
     }
 
     // --------------------------------------------------------------------------
@@ -404,8 +408,12 @@ public:
 
     // --------------------------------------------------------------------------
     // Get the width of the layer
-    inline uint16_t getWith(){
+    inline uint16_t getWidth(){
         return m_Width;
+    }
+
+    inline uint16_t getWith(){
+        return getWidth();
     }
 
     // --------------------------------------------------------------------------
@@ -455,11 +463,6 @@ public:
         m_Mode = Mode;    
     }
 
-protected :
-    // --------------------------------------------------------------------------
-    // Initialize the layer with display, DMA2D handler, frame buffer, dimensions, and Z position
-    void init(cDisplay* pDisplay, sColor* pLayerFrame, uint16_t y, uint16_t x, uint16_t Width, uint16_t Height, uint8_t zPos);
-
     // --------------------------------------------------------------------------
     // Set a pixel in the layer at (x, y) to the specified color
     virtual DAD_GFX_ERROR setPixel(uint16_t x, uint16_t y, const sColor& Color);
@@ -474,6 +477,10 @@ protected :
                                              const sColor& ForegroundColor, const sColor& BackgroundColor);
 
 protected :
+    // --------------------------------------------------------------------------
+    // Initialize the layer with display, DMA2D handler, frame buffer, dimensions, and Z position
+    void init(cDisplay* pDisplay, sColor* pLayerFrame, uint16_t y, uint16_t x, uint16_t Width, uint16_t Height, uint8_t zPos);
+
     DRAW_MODE   m_Mode = DRAW_MODE::Blend;
 };
 
